@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                sh 'docker build -t hospital-management-system .'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'docker run hospital-management-system test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'docker stop hospital-container || true'
+                sh 'docker rm hospital-container || true'
+                sh 'docker run -d --name hospital-container -p 80:80 hospital-management-system'
+            }
+        }
+    }
+}
