@@ -4,7 +4,12 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'docker build -t hospital-management-system .'
+                sh 'docker build -t hospital-management-system ./app'
+            }
+        }
+    stage('Push') {
+        steps {
+                sh 'docker push hospital-management-system'
             }
         }
         stage('Test') {
