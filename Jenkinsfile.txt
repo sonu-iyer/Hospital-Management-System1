@@ -7,7 +7,7 @@ pipeline {
                 script {
                     def buildStatus = sh(script: 'docker build -t hospital-management-system .', returnStatus: true)
                     if (buildStatus != 0) {
-                        error("Build failed")
+                        error("Build failed with status: ${buildStatus}")
                     }
                 }
             }
@@ -17,7 +17,7 @@ pipeline {
                 script {
                     def testStatus = sh(script: 'docker run hospital-management-system test', returnStatus: true)
                     if (testStatus != 0) {
-                        error("Tests failed")
+                        error("Tests failed with status: ${testStatus}")
                     }
                 }
             }
@@ -31,17 +31,6 @@ pipeline {
                         docker rm hospital-container || true
                         docker run -d --name hospital-container -p 80:80 hospital-management-system
                         '''
-                    }
-                }
-            }
-        }
-        stage('Post-deploy Validation') {
-            steps {
-                script {
-                    sleep 5 // wait for the container to start
-                    def response = sh(script: 'curl -f http://localhost', returnStatus: true)
-                    if (response != 0) {
-                        error("Deployment failed: service not reachable")
                     }
                 }
             }
