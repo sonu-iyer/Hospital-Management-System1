@@ -42,10 +42,10 @@ pipeline {
             steps {
                 script {
                     // Stop and remove existing container
-                    sh 'docker stop hospital-container || true && docker rm hospital-container || true'
+                    sh 'docker stop hospital-management-system || true && docker rm hospital-management-system || true'
 
                     // Run the Docker container
-                    sh "docker run -d --name hospital-container -p 80:81 ${DOCKER_IMAGE}"
+                    sh "docker run -d --name hospital-management-system -p 80:81 ${DOCKER_IMAGE}"
                 }
             }
         }
