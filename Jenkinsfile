@@ -45,7 +45,7 @@ pipeline {
                     sh 'docker stop hospital-management-system || true && docker rm hospital-management-system || true'
 
                     // Run the Docker container
-                    sh "docker run -d --name hospital-management-system -p 80:81 ${DOCKER_IMAGE}"
+                    sh "docker run -d --name hospital-management-system -p 80:8901 ${DOCKER_IMAGE}"
                 }
             }
         }
